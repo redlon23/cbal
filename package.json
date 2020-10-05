@@ -1,0 +1,19 @@
+{
+  "name": "cbal",
+  "version": "0.0.1",
+  "description": "Crypto Bot Api Library is a wrapper for crypto exchange apis. It provides easy to use methods to build bots quickly.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["Binance", "api", "cryptocurency", "bot", "trading", "exchange"],
+  "author": {
+    "name": "Pamir 'Nomad' Kantar",
+    "email": "nomadpk25@gmail.com",
+    "url": "https://github.com/redlon23"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.20.0"
+  }
+}
