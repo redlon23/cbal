@@ -20,7 +20,15 @@ class ParameterError extends ApiCallError {
     }
 }
 
+function handleError(err, func, url){
+    switch (err) {
+        case 404:
+            throw new NotFoundError(func, url)
+        case 400:
+            throw new ParameterError(func, url)
+    }
+}
+
 module.exports = {
-    NotFoundError,
-    ParameterError
+    handleError
 }
