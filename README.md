@@ -2,14 +2,14 @@
 Crypto Bot Api Library is a wrapper for crypto exchange apis. It provides easy to use methods to build bots quickly.
 It has standardized responses for each exchange.
 
-## Main Motivation behind this library
+## Main motivation behind this library
 The aim is being able to swap exchanges without worrying about
 return types and parameters.
 * I found my self writing the **same api calls** for most of my projects.
 * Standardize the responses so that don't have to write **multiple variants** of the **same bot**.
 
 ## Features
-This library all about tools to creating bots and reducing amount of code written
+This library is all about tools to creating bots and reducing amount of code written
 to make your bot compatible with other exchanges.  
 
 There are 3 main categories that CBAL library tries to cover:
@@ -48,7 +48,7 @@ kline data from given timestamps,on fail return empty array.
  - [x] Binance spot
  - [x] Binance futures
  - [ ]  Bybit Inverse
- - [ ]  Bybit perpetual
+ - [x]  Bybit perpetual
  - [ ]  Kraken
 
 
