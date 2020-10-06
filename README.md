@@ -8,7 +8,10 @@ return types and parameters.
 * I found my self writing the **same api calls** for most of my projects.
 * Standardize the responses so that don't have to write **multiple variants** of the **same bot**.
 
-## Documentation
+## Features
+This library all about tools to creating bots and reducing amount of code written
+to make your bot compatible with other exchanges.  
+
 There are 3 main categories that CBAL library tries to cover:
    1. Access to market data
         * Price
@@ -21,9 +24,19 @@ There are 3 main categories that CBAL library tries to cover:
         * Order / Trade history
    3. Trade actions
         * Place Orders
-        * Cancel orders
-    
-Currently, for each exchange, library offers:
+        * Cancel orders  
+        
+
+   For all 3 main categories, CBAL tries to offer standardized responses.
+   However, there are some exceptions where some apis don't provide same functionality as others.
+
+   Every api call is fully documented so that user can read the differences and make their 
+   own decisions.
+   
+   Signed / private endpoints will be covered in the library.  
+
+## Documentation
+Currently, for each exchange, library offers only market data:
 * `getPrice(symbol)` return price or on fail -1
 * `getMultiplePrice(symbols)` return array of prices or on fail empty array
 * `getOrderBook(symbol, limit)` returns parsed order book or on fail empty object
@@ -32,11 +45,11 @@ kline data from given timestamps,on fail return empty array.
 
 ## Upcoming Features
  Currently, I am working on market data api calls
- 1) Binance spot       Finished
- 2) Binance futures    Todo
- 3) Bybit Inverse      Todo
- 4) Bybit perpetual    Todo
- 5) Kraken             Todo
+ - [x] Binance spot
+ - [ ] Binance futures
+ - [ ]  Bybit Inverse
+ - [ ]  Bybit perpetual
+ - [ ]  Kraken
 
 
 ## Contributions, Bug report, Missing feature
