@@ -47,7 +47,7 @@ kline data from given timestamps,on fail return empty array.
  Currently, I am working on market data api calls
  - [x] Binance spot
  - [x] Binance futures
- - [ ]  Bybit Inverse
+ - [x]  Bybit Inverse
  - [x]  Bybit USDT
  - [ ]  Kraken
 
