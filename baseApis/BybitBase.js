@@ -2,7 +2,32 @@ const axios = require("axios")
 const {handleError} = require("./ErrorHandlers")
 const {sortParamsAlphabeticallyOmitEmpty, sortParamsAlphabetically} = require("./util")
 
-class BybitPerpetualAccess {
+
+class BybitInverseAccess{
+    constructor(publicKey, secretKey) {
+        this.base = "https://api.bybit.com"
+        this.publicKey = publicKey;
+        this.secretKey = secretKey;
+    }
+
+    async getPriceTicker(symbol=""){
+        let url = this.base + "/v2/public/tickers"
+            + sortParamsAlphabeticallyOmitEmpty({symbol})
+        let response;
+        try{
+            response = await axios.get(url);
+        } catch (err) {
+            let {status} = err.response;
+            handleError(status, "SymbolPrice", url)
+        }
+        if(response.data.ret_code === 10001){
+            handleError(400, "SymbolPrice", url)
+        }
+        return response.data.result;
+    }
+}
+
+class BybitUsdtAccess {
     constructor(publicKey, secretKey) {
         this.base = "https://api.bybit.com"
         this.publicKey = publicKey;
@@ -60,5 +85,5 @@ class BybitPerpetualAccess {
 }
 
 module.exports = {
-    BybitPerpetualAccess
+    BybitUsdtAccess
 }

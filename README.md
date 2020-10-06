@@ -48,7 +48,7 @@ kline data from given timestamps,on fail return empty array.
  - [x] Binance spot
  - [x] Binance futures
  - [ ]  Bybit Inverse
- - [x]  Bybit perpetual
+ - [x]  Bybit USDT
  - [ ]  Kraken
 
 

@@ -1,10 +1,10 @@
-const {BybitPerpetualAccess} = require("./baseApis/BybitBase")
+const {BybitUsdtAccess} = require("./baseApis/BybitBase")
 const CBALInterface = require("./CBALInterface")
 
-class BybitPerpetualApi extends CBALInterface {
+class BybitUsdtApi extends CBALInterface {
     constructor(publicKey, secretKey) {
         super();
-        this.access = new BybitPerpetualAccess(publicKey, secretKey);
+        this.access = new BybitUsdtAccess(publicKey, secretKey);
         this.enum = {
             interval: {
                 min1:   "1",
@@ -131,5 +131,5 @@ class BybitPerpetualApi extends CBALInterface {
 }
 
 module.exports = {
-    BybitPerpetualApi
+    BybitUsdtApi
 }
