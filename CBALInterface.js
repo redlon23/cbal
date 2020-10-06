@@ -9,7 +9,7 @@ class CBALInterface {
         throw new Error("Must implement interface method!")
     }
 
-    async getOrderBook(symbol, depth){
+    async getOrderBook(symbol, limit){
         throw new Error("Must implement interface method!")
     }
 

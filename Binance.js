@@ -73,19 +73,24 @@ class BinanceSpotApi extends CBALInterface{
      */
     async getOrderBook(symbol, limit=100) {
         let parsedBids = [], parsedAsks = []
-        let {bids: unParsedBids, asks: unparsedAsks} =
-            await this.access.getOrderBook(symbol, limit)
-        for(let item of unParsedBids){
-            parsedBids.push({
-                price: parseFloat(item[0]), quantity: parseFloat(item[1])
-            })
+        try{
+            let {bids: unParsedBids, asks: unparsedAsks} =
+                await this.access.getOrderBook(symbol, limit)
+            for(let item of unParsedBids){
+                parsedBids.push({
+                    price: parseFloat(item[0]), quantity: parseFloat(item[1])
+                })
+            }
+            for(let item of unparsedAsks){
+                parsedAsks.push({
+                    price: parseFloat(item[0]), quantity: parseFloat(item[1])
+                })
+            }
+            return {bids: parsedBids, asks: parsedAsks}
+        } catch (err){
+            console.log(err);
+            return {}
         }
-        for(let item of unparsedAsks){
-            parsedAsks.push({
-                price: parseFloat(item[0]), quantity: parseFloat(item[1])
-            })
-        }
-        return {bids: parsedBids, asks: parsedAsks}
     }
 
     /**
