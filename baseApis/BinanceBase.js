@@ -72,7 +72,6 @@ class BinanceFuturesAccess {
         return response.data
     }
 
-
     async getOrderBook(symbol, limit= 100) {
         let url = this.base + "/fapi/v1/depth"
             + sortParamsAlphabeticallyOmitEmpty({symbol, limit});

@@ -9,7 +9,7 @@ class BybitPerpetualAccess {
         this.secretKey = secretKey;
     }
 
-    async getPriceTicker(symbol) {
+    async getPriceTicker(symbol="") {
         let url = this.base + "/v2/public/tickers"
             + sortParamsAlphabeticallyOmitEmpty({symbol})
         let response;
@@ -57,19 +57,8 @@ class BybitPerpetualAccess {
         }
         return response.data.result;
     }
-
-
 }
 
 module.exports = {
     BybitPerpetualAccess
 }
-
-async function mani(){
-    let by = new BybitPerpetualAccess('','');
-    let startTime = (Date.now() - (60 * 60 * 1000)) / 1000 | 0
-    console.log(startTime)
-    let data = await by.getKlineData("BTCUSDT", 1,startTime, "")
-    console.log(data)
-}
-// mani();
