@@ -49,7 +49,9 @@ kline data from given timestamps,on fail return empty array.
  - [x] Binance futures
  - [x]  Bybit Inverse
  - [x]  Bybit USDT
- - [x]  Kraken
+ - [x]  Kraken  
+ 
+ 
  Next, will be implementing user data api calls
 
 
