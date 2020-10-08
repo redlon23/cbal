@@ -40,16 +40,17 @@ Currently, for each exchange, library offers only market data:
 * `getPrice(symbol)` return price or on fail -1
 * `getMultiplePrice(symbols)` return array of prices or on fail empty array
 * `getOrderBook(symbol, limit)` returns parsed order book or on fail empty object
-* `getKlineData(symbol, interval, startTime, endTime, limit)` returns historical
+* `getKlineData(symbol, interval, startTime, limit)` returns historical
 kline data from given timestamps,on fail return empty array.
 
 ## Upcoming Features
- Currently, I am working on market data api calls
+ Currently, working on market data api calls
  - [x] Binance spot
  - [x] Binance futures
  - [x]  Bybit Inverse
  - [x]  Bybit USDT
- - [ ]  Kraken
+ - [x]  Kraken
+ Next, will be implementing user data api calls
 
 
 ## Contributions, Bug report, Missing feature

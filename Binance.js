@@ -67,11 +67,11 @@ class BinanceSpotApi extends CBALInterface{
     /**
      * Gets the given symbols order book data
      * @param symbol {string}
-     * @param limit {number} optional
+     * @param limit {number | string} optional
      * @return {Promise<object{asks: array<object{price: number, quantity: number}>,
      * bids: array<object{price: number, quantity: number}>}>}
      */
-    async getOrderBook(symbol, limit=100) {
+    async getOrderBook(symbol, limit="") {
         let parsedBids = [], parsedAsks = []
         try{
             let {bids: unParsedBids, asks: unparsedAsks} =
@@ -102,15 +102,14 @@ class BinanceSpotApi extends CBALInterface{
      * @param symbol {string}
      * @param interval {enum} interval
      * @param startTime {number | string} timestamp optional
-     * @param endTime{number | string} timestamp optional
      * @param limit {number} optional
      * @return {array<object{openTime: number, open: number, high: number, low:number, close:number, volume: number}>}
      */
-    async getKlineData(symbol, interval, startTime, endTime, limit =500){
+    async getKlineData(symbol, interval, startTime, limit =500){
         let data;
         let container = []
         try{
-            data = await this.access.getKlineData(symbol, interval, startTime, endTime, limit);
+            data = await this.access.getKlineData(symbol, interval, startTime, limit);
         } catch (err){
             console.log(err)
             return container;
@@ -231,15 +230,14 @@ class BinanceFuturesApi extends CBALInterface{
      * @param symbol {string}
      * @param interval {enum} interval
      * @param startTime {number | string} timestamp optional
-     * @param endTime{number | string} timestamp optional
      * @param limit {number} optional
      * @return {array<object{openTime: number, open: number, high: number, low:number, close:number, volume: number}>}
      */
-    async getKlineData(symbol, interval, startTime, endTime, limit =500){
+    async getKlineData(symbol, interval, startTime, limit =500){
         let data;
         let container = []
         try{
-            data = await this.access.getKlineData(symbol, interval, startTime, endTime, limit);
+            data = await this.access.getKlineData(symbol, interval, startTime, limit);
         } catch (err){
             console.log(err)
             return container;

@@ -23,7 +23,7 @@ class BinanceSpotAccess {
     }
 
 
-    async getOrderBook(symbol, limit= 100) {
+    async getOrderBook(symbol, limit= "") {
         let url = this.base + "/api/v3/depth"
             + sortParamsAlphabeticallyOmitEmpty({symbol, limit});
         let response;
@@ -37,9 +37,9 @@ class BinanceSpotAccess {
     }
 
 
-    async getKlineData(symbol, interval, startTime, endTime, limit) {
+    async getKlineData(symbol, interval, startTime, limit) {
         let url = this.base + "/api/v3/klines"
-            + sortParamsAlphabeticallyOmitEmpty({symbol, interval, startTime, endTime, limit});
+            + sortParamsAlphabeticallyOmitEmpty({symbol, interval, startTime, limit});
         let response;
         try {
             response = await axios.get(url)
@@ -86,9 +86,9 @@ class BinanceFuturesAccess {
     }
 
 
-    async getKlineData(symbol, interval, startTime, endTime, limit) {
+    async getKlineData(symbol, interval, startTime, limit) {
         let url = this.base + "/fapi/v1/klines"
-            + sortParamsAlphabeticallyOmitEmpty({symbol, interval, startTime, endTime, limit});
+            + sortParamsAlphabeticallyOmitEmpty({symbol, interval, startTime, limit});
         let response;
         try {
             response = await axios.get(url)
