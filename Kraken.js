@@ -20,12 +20,6 @@ class KrakenApi extends CBALInterface {
         }
     }
 
-    /**
-     * Gets the given symbols latest price
-     * in case of error returns -1
-     * @param symbol {string}
-     * @return {Promise<number>}
-     */
     async getPrice(symbol){
         let data;
         try{
@@ -37,12 +31,6 @@ class KrakenApi extends CBALInterface {
         return parseFloat(data[Object.keys(data)[0]].c[0]);
     }
 
-    /**
-     * Gets all the given symbol prices
-     * in case of error returns empty array
-     * @param symbols{array<string>}
-     * @return {array<object{symbol: string, price: number}>}
-     */
     async getMultiplePrice(symbols) {
         let container = []
         let data;
@@ -61,21 +49,8 @@ class KrakenApi extends CBALInterface {
         return container;
     }
 
-    /**
-     * Gets the given symbols order book data
-     * @param symbol {string}
-     * @param limit {number | string} optional
-     * @return {Promise<object{asks: array<object{price: number, quantity: number}>,
-     * bids: array<object{price: number, quantity: number}>}>}
-     */
-    async getOrderBook(symbol, limit=""){
-        let data;
-        try{
-            data = await this.access.getOrderBook(symbol, limit);
-        } catch (err) {
-            console.log(err);
-            return {}
-        }
+    async getOrderBook(symbol){
+        let data = await this.access.getOrderBook(symbol);
         let bad = data[Object.keys(data)];
         let parsedBids = [], parsedAsks = []
         for(let item of bad.asks){
@@ -92,7 +67,7 @@ class KrakenApi extends CBALInterface {
     }
 
     /**
-     * Gets given symbols kline data, if start & end time
+     * Gets given symbols kline data, if start
      * is not given, it will return most recent data.
      * Data is in ascending order (oldest/earliest first)
      * in order to skip parameters, just use empty string
@@ -100,7 +75,7 @@ class KrakenApi extends CBALInterface {
      * @param symbol {string}
      * @param interval {enum} interval
      * @param startTime {number | string} timestamp in nanoseconds, optional
-     * @return {array<object{openTime: number, open: number, high: number, low:number, close:number, volume: number}>}
+     * @return {array<{openTime: number, open: number, high: number, low:number, close:number, volume: number}>}
      */
     async getKlineData(symbol, interval, startTime=""){
         let container = []
@@ -112,7 +87,6 @@ class KrakenApi extends CBALInterface {
             return container
         }
         let ohlcArray = data[Object.keys(data)[0]];
-        console.log(ohlcArray)
         for(let item of ohlcArray) {
             container.push({
                 openTime: item[0],
@@ -125,4 +99,7 @@ class KrakenApi extends CBALInterface {
         }
         return container;
     }
+}
+module.exports = {
+    KrakenApi
 }

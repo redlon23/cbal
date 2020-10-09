@@ -46,7 +46,7 @@ class BybitInverseAccess{
         return response.data.result;
     }
 
-    async getKlineData(symbol, interval, from, limit) {
+    async getKlineData(symbol, interval, from, limit="") {
         let url = this.base + "/v2/public/kline/list"
             + sortParamsAlphabeticallyOmitEmpty({symbol, interval,
                 from, limit})
@@ -103,7 +103,7 @@ class BybitUsdtAccess {
         return response.data.result;
     }
 
-    async getKlineData(symbol, interval, from, limit) {
+    async getKlineData(symbol, interval, from, limit="") {
         let url = this.base + "/public/linear/kline"
             + sortParamsAlphabeticallyOmitEmpty({symbol, interval,
                 from, limit})

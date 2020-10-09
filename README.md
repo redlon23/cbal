@@ -36,23 +36,30 @@ There are 3 main categories that CBAL library tries to cover:
    Signed / private endpoints will be covered in the library.  
 
 ## Documentation
-Currently, for each exchange, library offers only market data:
-* `getPrice(symbol)` return price or on fail -1
-* `getMultiplePrice(symbols)` return array of prices or on fail empty array
-* `getOrderBook(symbol, limit)` returns parsed order book or on fail empty object
-* `getKlineData(symbol, interval, startTime, limit)` returns historical
-kline data from given timestamps,on fail return empty array.
+CBAL offers documentation for each method including parameters and return types.  
+Briefly, here are the unified methods. 
+Market Data:
+* `getPrice(symbol)` returns price
+* `getMultiplePrice(symbols)` returns array of prices with symbols
+* `getOrderBook(symbol)` returns array of order book data.
+* `getKlineData(symbol, interval, startTime)` returns ohlc as well as volume and open time
 
 ## Upcoming Features
- Currently, working on market data api calls
- - [x] Binance spot
- - [x] Binance futures
- - [x]  Bybit Inverse
- - [x]  Bybit USDT
- - [x]  Kraken  
+ Currently, working on user data api calls
+ - [] Binance spot
+ - [] Binance futures
+ - []  Bybit Inverse
+ - []  Bybit USDT
+ - []  Kraken  
  
  
- Next, will be implementing user data api calls
+ ## Finished
+Market data api calls
+  - [x] Binance spot
+  - [x] Binance futures
+  - [x]  Bybit Inverse
+  - [x]  Bybit USDT
+  - [x]  Kraken  
 
 
 ## Contributions, Bug report, Missing feature
