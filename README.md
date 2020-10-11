@@ -20,13 +20,11 @@ There are 3 main categories that CBAL library tries to cover:
    2. Access to users data
         * Active Orders
         * Balance
-        * Profit and Loss
-        * Order / Trade history
+        * Positions
    3. Trade actions
         * Place Orders
         * Cancel orders  
         
-
    For all 3 main categories, CBAL tries to offer standardized responses.
    However, there are some exceptions where some apis don't provide same functionality as others.
 
@@ -37,20 +35,24 @@ There are 3 main categories that CBAL library tries to cover:
 
 ## Documentation
 CBAL offers documentation for each method including parameters and return types.  
-Briefly, here are the unified methods. 
+Briefly, here are the unified methods.  
 Market Data:
 * `getPrice(symbol)` returns price
 * `getMultiplePrice(symbols)` returns array of prices with symbols
 * `getOrderBook(symbol)` returns array of order book data.
 * `getKlineData(symbol, interval, startTime)` returns ohlc as well as volume and open time
 
+User Data:
+* `getBalance()` returns array of asset symbol pair
+* `getActiveOrders(symbol)` returns array of active orders
+* `getPosition(symbol)` returns position object (except Binance spot) 
 ## Upcoming Features
  Currently, working on user data api calls
- - [] Binance spot
- - [] Binance futures
- - []  Bybit Inverse
- - []  Bybit USDT
- - []  Kraken  
+ - [x] Binance spot
+ - [x] Binance futures
+ - [ ]  Bybit Inverse
+ - [ ]  Bybit USDT
+ - [ ]  Kraken  
  
  
  ## Finished

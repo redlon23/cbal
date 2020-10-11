@@ -94,6 +94,72 @@ class BinanceSpotApi extends BinanceBaseApi {
             }
         }
     }
+
+    async getActiveOrders(symbol) {
+        let data;
+        let container = []
+        try {
+            data = await this.access.getOpenOrders(symbol);
+        } catch (err) {
+            console.log(err)
+            return container;
+        }
+        for(let item of data) {
+            container.push({
+                symbol: item.symbol,
+                orderId: item.orderId,
+                price: parseFloat(item.price),
+                side: item.side,
+                status: item.status,
+                time: item.time
+            })
+        }
+        return container;
+    }
+
+    async getBalance() {
+        let parsedBalances = []
+        try {
+            let {balances} = await this.access.getAccountInformation();
+            for(let {asset, free, locked} of balances) {
+                free = parseFloat(free);
+                locked = parseFloat(locked);
+                if(free !== 0 || locked !== 0){
+                    parsedBalances.push({
+                        asset,
+                        free,
+                        locked
+                    })
+                }
+            }
+        } catch (err) {
+            console.log(err)
+            return [];
+        }
+        return parsedBalances
+    }
+
+    async getOrderHistory(symbol){
+        let data;
+        let container = []
+        try {
+            data = await this.access.getAllOrders(symbol);
+        } catch (err) {
+            console.log(err)
+            return container;
+        }
+        for(let item of data) {
+            container.push({
+                symbol: item.symbol,
+                orderId: item.orderId,
+                price: parseFloat(item.price),
+                side: item.side,
+                status: item.status,
+                time: item.time
+            })
+        }
+        return container;
+    }
 }
 
 class BinanceFuturesApi extends BinanceBaseApi {
@@ -120,8 +186,47 @@ class BinanceFuturesApi extends BinanceBaseApi {
             }
         }
     }
-}
 
+    async getPositions(symbol){
+        let data;
+        let container = []
+        try {
+            data = await this.access.getPositions(symbol);
+        } catch (err) {
+            console.log(err)
+            return container;
+        }
+        for(let item of data) {
+            container.push({
+                symbol: item.symbol,
+                posSide: item.positionSide,
+                entryPrice: parseFloat(item.entryPrice),
+                quantity: parseFloat(item.positionAmt),
+                leverage: parseFloat(item.leverage),
+                unRelProfit: parseFloat(item.unRealizedProfit)
+            })
+        }
+        return container;
+    }
+
+    async getBalance() {
+        let data;
+        let container = []
+        try {
+            data = await this.access.getAccountBalance();
+        } catch (err) {
+            console.log(err)
+            return container;
+        }
+        for (let item of data) {
+            container.push({
+                asset: item.asset,
+                balance: parseFloat(item.balance)
+            })
+        }
+        return container;
+    }
+}
 module.exports = {
     BinanceSpotApi,
     BinanceFuturesApi

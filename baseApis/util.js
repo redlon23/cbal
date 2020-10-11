@@ -1,3 +1,5 @@
+const crypto = require("crypto")
+
 function KeyValue(key, value) {
     this.key = key;
     this.value = value;
@@ -46,9 +48,30 @@ function sortParamsAlphabeticallyOmitEmpty(requestParams) {
     return "?" + query.join('&');
 }
 
+function sortParamsAlphabeticallyOmitEmptySignV(requestParams) {
+    let query = [];
+    for (let key in requestParams) {
+        if (requestParams.hasOwnProperty(key)) {
+            if(typeof requestParams[key] === "string" &&
+                requestParams[key].length === 0){
+                continue;
+            }
+            query.push(new KeyValue(key, requestParams[key]));
+        }
+    }
+    query.sort(function (a, b) {
+        return a.key < b.key ? -1 : 1
+    });
+    return query.join('&');
+}
+
+function getSignature(requestParams, secret) {
+    return crypto.createHmac('sha256', secret).update(requestParams, "utf8").digest('hex')
+}
 
 module.exports = {
     sortParamsAlphabetically,
     sortParamsAlphabeticallyOmitEmpty,
-    parameterFilter
+    getSignature,
+    sortParamsAlphabeticallyOmitEmptySignV
 }
