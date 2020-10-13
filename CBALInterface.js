@@ -47,18 +47,35 @@ class CBALInterface {
 
 
     // =============== User Data Endpoints ==================
-
-    async getPositions(){
+    /**
+     * Gets all open positions of given symbol
+     * @param symbol {string}
+     * @return {Promise<array<object>>}
+     */
+    async getPositions(symbol){
+        throw new Error("Must implement interface method!")
+    }
+    /**
+     * Gets all active orders of given symbol
+     * @param symbol {string}
+     * @return {Promise<array<object>>}
+     */
+    async getActiveOrders(symbol){
         throw new Error("Must implement interface method!")
     }
 
-    async getActiveOrders(){
-        throw new Error("Must implement interface method!")
-    }
-
+    /**
+     * Collects all the assets that user owns.
+     * @return {Promise<array<object>>}
+     */
     async getBalance(){
         throw new Error("Must implement interface method!")
     }
+
+    /**
+     * Todo
+     * @return {Promise<void>}
+     */
     async getOrderHistory(){
         throw new Error("Must implement interface method!")
     }
