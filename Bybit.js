@@ -83,6 +83,10 @@ class BybitUsdtApi extends BybitBaseApi {
         super();
         this.access = new BybitUsdtAccess(publicKey, secretKey);
         this.enum = {
+            side:{
+                buy: "Buy",
+                sell: "Sell"
+            },
             interval: {
                 min1: "1",
                 min3: "3",
@@ -101,6 +105,71 @@ class BybitUsdtApi extends BybitBaseApi {
             }
         }
     }
+
+    async getPositions(symbol) {
+        let data;
+        let container = []
+        try {
+            data = await this.access.getPositions(symbol)
+        }catch (e){
+            console.log(e)
+            return container;
+        }
+        for(let item of data.result) {
+            container.push({
+                symbol: item.symbol,
+                quantity: item.size,
+                side: item.side,
+                entryPrice: item.entry_price,
+                leverage: item.leverage,
+                unRelProfit: 0
+            })
+        }
+        return container;
+    }
+
+    async getBalance() {
+        let data;
+        let container = []
+        try{
+            data = await this.access.getBalance();
+        } catch (e) {
+            console.log(e);
+            return container
+        }
+        for(let [k,v] of Object.entries(data.result)){
+            container.push({
+                asset: k,
+                availableBalance: parseFloat(v.available_balance),
+                locked: parseFloat(v.used_margin)
+            })
+        }
+        return container;
+    }
+
+    async getActiveOrders(symbol){
+        let data;
+        let container = []
+        try{
+            data = await this.access.getActiveOrders(symbol);
+        } catch (e) {
+            console.log(e);
+            return container
+        }
+        for(let item of data.result.data){
+            container.push({
+                symbol: item.symbol,
+                orderId: item.order_id,
+                clOrderId: "",
+                price: parseFloat(item.price),
+                side: item.side,
+                quantity : parseFloat(item.qty),
+                status: item.order_status,
+                time: item.created_time
+            })
+        }
+        return container;
+    }
 }
 
 class BybitInverseApi extends BybitBaseApi {
@@ -108,6 +177,10 @@ class BybitInverseApi extends BybitBaseApi {
         super();
         this.access = new BybitInverseAccess(publicKey, secretKey);
         this.enum = {
+            side:{
+                buy: "Buy",
+                sell: "Sell"
+            },
             interval: {
                 min1: "1",
                 min3: "3",
@@ -125,6 +198,67 @@ class BybitInverseApi extends BybitBaseApi {
                 year: "Y"
             }
         }
+    }
+
+    async getPositions(symbol) {
+        let data;
+        try {
+            data = await this.access.getPositions(symbol)
+        }catch (e){
+            console.log(e)
+            return container;
+        }
+        return {
+            symbol: data.result.symbol,
+            quantity: data.result.size,
+            side: data.result.side,
+            entryPrice: parseFloat(data.result.entry_price),
+            leverage: parseFloat(data.result.leverage),
+            unRelProfit: 0
+
+        }
+    }
+
+    async getBalance() {
+        let data;
+        let container = []
+        try{
+            data = await this.access.getBalance();
+        } catch (e) {
+            console.log(e);
+            return container
+        }
+        for(let [k,v] of Object.entries(data.result)){
+            container.push({
+                asset: k,
+                availableBalance: parseFloat(v.available_balance),
+                locked: parseFloat(v.used_margin)
+            })
+        }
+    }
+
+    async getActiveOrders(symbol){
+        let data;
+        let container = []
+        try{
+            data = await this.access.getActiveOrders(symbol);
+        } catch (e) {
+            console.log(e);
+            return container
+        }
+        for(let item of data.result.data){
+            container.push({
+                symbol: item.symbol,
+                orderId: item.order_id,
+                clOrderId: "",
+                price: parseFloat(item.price),
+                side: item.side,
+                quantity : parseFloat(item.qty),
+                status: item.order_status,
+                time: item.created_time
+            })
+        }
+        return container;
     }
 }
 

@@ -50,8 +50,8 @@ User Data:
  Currently, working on user data api calls
  - [x] Binance spot
  - [x] Binance futures
- - [ ]  Bybit Inverse
- - [ ]  Bybit USDT
+ - [x]  Bybit Inverse
+ - [x]  Bybit USDT
  - [ ]  Kraken  
  
  

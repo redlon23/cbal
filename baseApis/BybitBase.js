@@ -1,6 +1,7 @@
 const axios = require("axios")
 const {handleError} = require("./ErrorHandlers")
-const {sortParamsAlphabeticallyOmitEmpty, sortParamsAlphabetically} = require("./util")
+const {sortParamsAlphabeticallyOmitEmpty, getSignature,
+sortParamsAlphabeticallyOmitEmptySignV} = require("./util")
 
 
 class BybitInverseAccess{
@@ -9,8 +10,6 @@ class BybitInverseAccess{
         this.publicKey = publicKey;
         this.secretKey = secretKey;
     }
-
-
 
     // Currently both Inverse and USDT market shares the ticker endpoint but its subject to change
     async getPriceTicker(symbol="") {
@@ -62,6 +61,49 @@ class BybitInverseAccess{
         }
         return response.data.result;
     }
+
+    async getPositions(symbol) {
+        const endPoint = "/v2/private/position/list";
+        const params = sortParamsAlphabeticallyOmitEmptySignV({ symbol, api_key: this.publicKey, timestamp: Date.now() });
+        const sign = getSignature(params, this.secretKey);
+        const url = `${this.base}${endPoint}?${params}&sign=${sign}`;
+        const requestOptions = {
+            url,
+            method: "GET"
+        };
+
+        let response = await axios(requestOptions);
+        return response.data
+    }
+
+    async getBalance(){
+        const endPoint = "/v2/private/wallet/balance"
+        const params = sortParamsAlphabeticallyOmitEmptySignV({ api_key: this.publicKey, timestamp: Date.now() });
+        const sign = getSignature(params, this.secretKey);
+        const url = `${this.base}${endPoint}?${params}&sign=${sign}`;
+        const requestOptions = {
+            url,
+            method: "GET"
+        };
+
+        let response = await axios(requestOptions);
+        return response.data
+    }
+
+    async getActiveOrders(symbol) {
+        const endPoint = "/open-api/order/list"
+        const params = sortParamsAlphabeticallyOmitEmptySignV({order_status: "New", symbol, api_key: this.publicKey, timestamp: Date.now() });
+        const sign = getSignature(params, this.secretKey);
+        const url = `${this.base}${endPoint}?${params}&sign=${sign}`;
+        const requestOptions = {
+            url,
+            method: "GET"
+        };
+
+        let response = await axios(requestOptions);
+        return response.data
+    }
+
 }
 
 class BybitUsdtAccess {
@@ -119,7 +161,52 @@ class BybitUsdtAccess {
         }
         return response.data.result;
     }
+
+    async getPositions(symbol){
+        const endPoint = "/private/linear/position/list";
+        const params = sortParamsAlphabeticallyOmitEmptySignV({ symbol, api_key: this.publicKey, timestamp: Date.now() });
+        const sign = getSignature(params, this.secretKey);
+        const url = `${this.base}${endPoint}?${params}&sign=${sign}`;
+        const requestOptions = {
+            url,
+            method: "GET"
+        };
+
+        let response = await axios(requestOptions);
+        return response.data
+    }
+
+    async getBalance(){
+        const endPoint = "/v2/private/wallet/balance"
+        const params = sortParamsAlphabeticallyOmitEmptySignV({ api_key: this.publicKey, timestamp: Date.now() });
+        const sign = getSignature(params, this.secretKey);
+        const url = `${this.base}${endPoint}?${params}&sign=${sign}`;
+        const requestOptions = {
+            url,
+            method: "GET"
+        };
+
+        let response = await axios(requestOptions);
+        return response.data
+    }
+
+    async getActiveOrders(symbol) {
+        const endPoint = "/private/linear/order/list"
+        const params = sortParamsAlphabeticallyOmitEmptySignV({order_status: "New", symbol, api_key: this.publicKey, timestamp: Date.now() });
+        const sign = getSignature(params, this.secretKey);
+        const url = `${this.base}${endPoint}?${params}&sign=${sign}`;
+        const requestOptions = {
+            url,
+            method: "GET"
+        };
+
+        let response = await axios(requestOptions);
+        return response.data
+    }
+
 }
+
+
 module.exports = {
     BybitUsdtAccess,
     BybitInverseAccess

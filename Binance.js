@@ -75,6 +75,10 @@ class BinanceSpotApi extends BinanceBaseApi {
         super();
         this.access = new BinanceSpotAccess(publicKey, secretKey)
         this.enum = {
+            side:{
+                buy: "BUY",
+                sell: "SELL"
+            },
             interval: {
                 min1: "1m",
                 min3: "3m",
@@ -127,7 +131,7 @@ class BinanceSpotApi extends BinanceBaseApi {
                 if(free !== 0 || locked !== 0){
                     parsedBalances.push({
                         asset,
-                        free,
+                        availableBalance: free,
                         locked
                     })
                 }
@@ -167,6 +171,10 @@ class BinanceFuturesApi extends BinanceBaseApi {
         super();
         this.access = new BinanceFuturesAccess(publicKey, secretKey)
         this.enum = {
+            side:{
+                buy: "BUY",
+                sell: "SELL"
+            },
             interval: {
                 min1: "1m",
                 min3: "3m",
@@ -197,11 +205,12 @@ class BinanceFuturesApi extends BinanceBaseApi {
             return container;
         }
         for(let item of data) {
+            let quantity = parseFloat(item.positionAmt)
             container.push({
                 symbol: item.symbol,
-                posSide: item.positionSide,
+                quantity,
+                side: quantity < 0 ? this.enum.side.sell : this.enum.side.buy,
                 entryPrice: parseFloat(item.entryPrice),
-                quantity: parseFloat(item.positionAmt),
                 leverage: parseFloat(item.leverage),
                 unRelProfit: parseFloat(item.unRealizedProfit)
             })
@@ -221,12 +230,38 @@ class BinanceFuturesApi extends BinanceBaseApi {
         for (let item of data) {
             container.push({
                 asset: item.asset,
-                balance: parseFloat(item.balance)
+                availableBalance: parseFloat(item.availableBalance),
+                locked: NaN
+            })
+        }
+        return container;
+    }
+
+    async getActiveOrders(symbol) {
+        let data;
+        let container = []
+        try {
+            data = await this.access.getOpenOrders(symbol);
+        } catch (err) {
+            console.log(err)
+            return container;
+        }
+        for(let item of data) {
+            container.push({
+                symbol: item.symbol,
+                orderId: item.orderId,
+                clOrderId: item.clientOrderId,
+                price: parseFloat(item.price),
+                side: item.side,
+                quantity : parseFloat(item.origQty),
+                status: item.status,
+                time: item.time
             })
         }
         return container;
     }
 }
+
 module.exports = {
     BinanceSpotApi,
     BinanceFuturesApi
