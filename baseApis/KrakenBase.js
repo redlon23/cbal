@@ -1,6 +1,6 @@
 const axios = require("axios")
 const {handleError} = require("./ErrorHandlers")
-const {sortParamsAlphabeticallyOmitEmpty, sortParamsAlphabetically} = require("./util")
+const {sortParamsAlphabeticallyOmitEmpty, getSignature} = require("./util")
 
 class KrakenAccess {
     constructor(publicKey, secretKey) {
