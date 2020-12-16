@@ -6,7 +6,14 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": ["Binance", "api", "cryptocurency", "bot", "trading", "exchange"],
+  "keywords": [
+    "Binance",
+    "api",
+    "cryptocurency",
+    "bot",
+    "trading",
+    "exchange"
+  ],
   "author": {
     "name": "Pamir 'Nomad' Kantar",
     "email": "nomadpk25@gmail.com",
@@ -14,6 +21,8 @@
   },
   "license": "ISC",
   "dependencies": {
-    "axios": "^0.20.0"
+    "async-mutex": "^0.2.6",
+    "axios": "^0.20.0",
+    "ws": "^7.4.1"
   }
 }
