@@ -252,6 +252,57 @@ class BinanceFuturesAccess {
         }
         return response.data
     }
+
+    async getIncomeHistory(symbol='', incomeType='', startTime='', endTime='', limit=''){
+        const endPoint = "/fapi/v1/income";
+        const params = sortParamsAlphabetically({symbol,
+            timestamp: Date.now(), incomeType, startTime, endTime, limit });
+        const signature = getSignature(params, this.secretKey);
+
+        let url = `${this.base}${endPoint}?${params}&signature=${signature}`;
+        const requestOptions = {
+            headers: { 'X-MBX-APIKEY': this.public },
+            url,
+            method: "GET"
+        };
+
+        let response = await axios(requestOptions);
+        return response.data
+    }
+
+    async getAllLiquidationOrders(symbol='', startTime='', endTime='', limit=''){
+        const endPoint = "/fapi/v1/allForceOrders"
+        const params = sortParamsAlphabetically({symbol
+            , startTime, endTime, limit });
+
+        let url = `${this.base}${endPoint}?${params}`;
+        const requestOptions = {
+            url,
+            method: "GET"
+        };
+
+        let response = await axios(requestOptions);
+        return response.data
+    }
+
+    async cancelAllOpenOrders(symbol){
+        const endPoint = "/fapi/v1/allOpenOrders";
+        const params = sortParamsAlphabetically({ symbol, timestamp: Date.now() });
+        const signature = getSignature(params, this.secretKey);
+
+        let url = `${this.base}${endPoint}?${params}&signature=${signature}`;
+        const requestOptions = {
+            headers: { 'X-MBX-APIKEY': this.public },
+            url,
+            method: "DELETE"
+        };
+
+        let response = await axios(requestOptions);
+        return response.data
+    }
+
+
+
 }
 
 module.exports = {BinanceSpotAccess, BinanceFuturesAccess}
