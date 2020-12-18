@@ -204,6 +204,35 @@ class BybitUsdtAccess {
         return response.data
     }
 
+    async cancelAllOpenOrders(symbol){
+        const endPoint = "/private/linear/order/cancel-all";
+        const params = sortParamsAlphabeticallyOmitEmptySignV({ symbol, api_key: this.publicKey ,timestamp: Date.now() });
+        const sign = getSignature(params, this.secretKey);
+        const url = `${this.base}${endPoint}?${params}&sign=${sign}`;
+        const requestOptions = {
+            url,
+            method: "POST"
+        };
+
+        let response = await axios(requestOptions);
+        return response.data
+    }
+
+
+    async placeConditionalMarketOrder(symbol, side, qty, base_price, stop_px, trigger_by = '', time_in_force = '', reduce_only = '', close_on_trigger = ''){
+        const endPoint = "/private/linear/stop-order/create";
+        const params = sortParamsAlphabeticallyOmitEmptySignV({ symbol, side, qty, base_price, stop_px, trigger_by, time_in_force, order_type: "Market", reduce_only, api_key: this.public, close_on_trigger ,timestamp: Date.now() });
+        const sign = getSignature(params, this.secretKey);
+        const url = `${this.base}${endPoint}?${params}&sign=${sign}`;
+        const requestOptions = {
+            url,
+            method: "POST"
+        };
+
+        let response = await axios(requestOptions);
+        return response.data
+    }
+
 }
 
 
